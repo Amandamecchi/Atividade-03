@@ -12,7 +12,7 @@ SELECT * FROM hospedes;
 
 CREATE TABLE quartos (
     id_quarto SERIAL PRIMARY KEY,
-    ocupado BOOLEAN NOT NULL,
+    ocupado BOOLEAN,
     numero_quarto INT NOT NULL
 );
 
@@ -27,6 +27,8 @@ CREATE TABLE reservas (
     FOREIGN KEY (id_hospede) REFERENCES  hospedes (id_hospede)
 );
 
+--INSERT's --
+
 INSERT INTO hospedes (id_hospede, email, idade) VALUES 
 (1, 'flavia@gmail.com', 12),
 (2, 'julia@gmail.com', 18),
@@ -38,7 +40,7 @@ VALUES
 (1, 106, '70.05', '2024/11/10', '2024/11/13'),
 (2, 108, '90.05', '2024/11/13', '2024/11/20'),
 (3, 109, '50.05', '2024/11/19', '2024/11/24'),
-(4, 105, '100.00', '2024/12/25', '2024/11/20');
+(4, 105, '100.00', '2024/11/19', '2024/11/24');
 
 INSERT INTO quartos (id_quarto, ocupado, numero_quarto)
 VALUES 
@@ -47,4 +49,33 @@ VALUES
 (3, TRUE, 109),
 (4, FALSE, 105);
 
+INSERT INTO reservas (id_hospede, id_reserva, id_quarto, preco_reserva, data_entrada, data_saida)
+VALUES 
+(1, 109, 1, '100.00', '2024/11/19', '2024/11/24');
+
+
+--CONSULTA JOIN - MOSTRA AS RESERVAS FINALIZADAS  
+
+SELECT 
+    r.id_reserva,
+    h.email AS hospede,
+    h.id_hospede,
+    q.ocupado,
+    q.numero_quarto,
+    r.data_entrada,
+    r.data_saida
+FROM 
+    reservas r
+JOIN
+    hospedes h ON r.id_hospede = h.id_hospede
+JOIN 
+    quartos q ON r.id_quarto = r.id_quarto
+WHERE 
+    h.id_hospede = 4;
+
+
+--CONSULTA ... - MOSTRA AS RESERVAS ATIVAS--
+
+
+--UPDATE O BOOLEAN
 
