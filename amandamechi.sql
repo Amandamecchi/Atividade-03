@@ -51,8 +51,12 @@ VALUES
 
 INSERT INTO reservas (id_hospede, id_reserva, id_quarto, preco_reserva, data_entrada, data_saida)
 VALUES 
-(1, 109, 1, '100.00', '2024/11/19', '2024/11/24');
+(2, 90, 1, '90.00', '2024/11/19', '2024/11/24'),
+(3, 60, 3, '50.00', '2024/11/19', '2024/12/20'),
+(4, 72, 2, '80.00', '2024/11/19', '2024/11/15');
 
+
+(1, 109, 1, '100.00', '2024/11/19', '2024/11/24');
 
 --CONSULTA JOIN - MOSTRA AS RESERVAS FINALIZADAS  
 
@@ -77,5 +81,15 @@ WHERE
 --CONSULTA ... - MOSTRA AS RESERVAS ATIVAS--
 
 
---UPDATE O BOOLEAN
+SELECT 
+       h.email AS hospede,
+       q.numero_quarto AS quarto,
+       r.data_entrada,
+       r.data_saida
+FROM
+       Hospedes h
+JOIN 
+       Reservas r ON h.id_hospede = r.id_hospede
+JOIN
+       Quartos q ON r.id_quarto = q.id_quarto;
 
